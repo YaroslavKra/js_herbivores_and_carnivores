@@ -9,12 +9,12 @@ class Animal {
     Animal.alive.push(this);
   }
 
-  die() {
-    const index = Animal.alive.indexOf(this);
+  static cleanupDead() {
+    Animal.alive = Animal.alive.filter((a) => a.health > 0);
+  }
 
-    if (index > -1) {
-      Animal.alive.splice(index, 1);
-    }
+  die() {
+    Animal.cleanupDead();
   }
 }
 
@@ -35,7 +35,7 @@ class Carnivore extends Animal {
       prey.health -= 50;
 
       if (prey.health <= 0) {
-        prey.die();
+        Animal.cleanupDead();
       }
     }
   }
